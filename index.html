@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Payoo Login</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://site-assets.fontawesome.com/releases/v6.6.0/css/all.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://site-assets.fontawesome.com/releases/v6.6.0/css/sharp-solid.css"
+    />
+  </head>
+  <body>
+    <!--  LOGIN PAGE -->
+    <div
+      id="error-msg"
+      class="bg-red-200 text-center py-1 font-medium invisible"
+    >
+      Please check your Number and PIN and try again.
+    </div>
+    <section class="container mx-auto w-2/4 mt-10">
+      <!-- LOGO -->
+      <img src="assets/logo.svg" alt="Payoo Logo" class="flex mx-auto w-1/4" />
+      <!-- FORM -->
+      <form class="card-body">
+        <div class="form-control">
+          <label class="label">
+            <span class="font-medium text-black">Mobile Number</span>
+          </label>
+          <input
+            type="text"
+            placeholder="Enter your number"
+            class="input input-bordered"
+            autocomplete="on"
+            id="input-number"
+          />
+        </div>
+        <div class="form-control">
+          <label class="label">
+            <span class="font-medium text-black">4 Digit Pin</span>
+          </label>
+          <input
+            type="password"
+            placeholder="Enter 4 Digit Pin"
+            class="input input-bordered"
+            autocomplete="on"
+            id="input-pin"
+          />
+        </div>
+        <div class="form-control mt-6">
+          <!-- BUTTON -->
+          <button
+            class="btn bg-[#0874F2] rounded-full text-white text-lg font-semibold"
+            id="login-btn"
+          >
+            Login
+          </button>
+        </div>
+      </form>
+    </section>
+    <script src="javascripts/login.js"></script>
+  </body>
+</html>
