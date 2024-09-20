@@ -24,20 +24,22 @@
     </style>
   </head>
   <body class="font-outfit container w-4/5 mx-auto my-5">
-    <nav class="mt-5 flex justify-between items-center">
+    <nav class="mt-5 flex justify-between items-center sticky top-3">
       <!-- Balances -->
       <div class="flex gap-2">
         <div>
           <img src="assets/logo.svg" alt="Payoo Logo" />
         </div>
         <div>
-          <h3 class="font-extrabold text-lg">$<span>2000</span></h3>
+          <h3 class="font-extrabold text-lg">
+            $<span id="balance">2000</span>
+          </h3>
           <p class="text-gray-500">Available Balance</p>
         </div>
       </div>
       <!-- Logout Button -->
       <div>
-        <button class="btn text-[#08080880]">
+        <button class="btn text-gray-500" id="logout">
           <span><img src="assets/exit.svg" /></span>Logout
         </button>
       </div>
@@ -55,12 +57,15 @@
 
       <!-- Options -->
       <section class="grid lg:grid-cols-4 gap-4 mt-10">
-        <button class="py-8 px-10 border border-1 rounded-2xl">
+        <button class="py-8 px-10 border border-1 rounded-2xl" id="addMoney">
           <img class="w-2/5 mx-auto mb-2" src="assets/wallet.svg" alt="" />
           <h3 class="text-[#080808B2] text-center">Add Money</h3>
         </button>
 
-        <button class="py-8 px-10 border border-1 rounded-2xl">
+        <button
+          class="py-8 px-10 border border-1 rounded-2xl"
+          id="withdrawMoney"
+        >
           <img class="w-2/5 mx-auto mb-2" src="assets/send.svg" alt="" />
           <h3 class="text-[#080808B2] text-center">Cashout</h3>
         </button>
@@ -86,67 +91,147 @@
         </button>
       </section>
 
-      <!-- Added section -->
-      <form class="card-body container w-3/5 mx-auto">
-        <div class="form-control">
-          <label class="label">
-            <span class="font-medium text-black">Bank Account Number</span>
-          </label>
-          <select class="select select-bordered">
-            <option disabled selected>Select bank</option>
-            <option>Prime Bank</option>
-            <option>UCB Bank</option>
-            <option>Dhaka Bank</option>
-            <option>Brac Bank</option>
-          </select>
-        </div>
+      <!-- Added AddMoney section -->
+      <section id="add-money" class="hidden">
+        <form class="card-body container w-3/5 mx-auto">
+          <div class="form-control">
+            <label class="label">
+              <span class="font-medium text-black">Select Bank</span>
+            </label>
+            <select class="select select-bordered">
+              <option disabled selected>Select bank</option>
+              <option>Prime Bank</option>
+              <option>UCB Bank</option>
+              <option>Dhaka Bank</option>
+              <option>Brac Bank</option>
+            </select>
+          </div>
 
-        <div class="form-control">
-          <label class="label">
-            <span class="font-medium text-black">Bank Account Number</span>
-          </label>
-          <input
-            type="text"
-            placeholder="Enter 11 digit account number"
-            class="input input-bordered"
-            autocomplete="on"
-            id="input-number"
-          />
-        </div>
-        <div class="form-control">
-          <label class="label">
-            <span class="font-medium text-black">Amount to Add</span>
-          </label>
-          <input
-            type="password"
-            placeholder="Add Amount to withdraw"
-            class="input input-bordered"
-            autocomplete="on"
-            id="input-pin"
-          />
-        </div>
-        <div class="form-control">
-          <label class="label">
-            <span class="font-medium text-black">Pin Number</span>
-          </label>
-          <input
-            type="password"
-            placeholder="Enter 4 Digit Pin number"
-            class="input input-bordered"
-            autocomplete="on"
-            id="input-pin"
-          />
-        </div>
-        <div class="form-control mt-6">
-          <!-- BUTTON -->
-          <button
-            class="btn bg-[#0874F2] rounded-full text-white text-lg font-semibold"
-            id="login-btn"
-          >
-            Add Money
-          </button>
-        </div>
-      </form>
+          <div class="form-control">
+            <label class="label">
+              <span class="font-medium text-black">Bank Account Number</span>
+            </label>
+            <input
+              type="text"
+              placeholder="Enter 11 digit account number"
+              class="input input-bordered"
+              autocomplete="on"
+              id="input-account-number"
+            />
+          </div>
+          <p id="error-msg-bank" class="text-red-600 text-sm hidden">
+            Invalid Bank Account Number
+          </p>
+
+          <div class="form-control">
+            <label class="label">
+              <span class="font-medium text-black">Amount to Add</span>
+            </label>
+            <input
+              type="text"
+              placeholder="Add Amount to withdraw"
+              class="input input-bordered"
+              autocomplete="on"
+              id="input-add-amount"
+            />
+          </div>
+          <p id="error-msg-amount" class="text-red-600 text-sm hidden">
+            Invalid Amount
+          </p>
+
+          <div class="form-control">
+            <label class="label">
+              <span class="font-medium text-black">Pin Number</span>
+            </label>
+            <input
+              type="password"
+              placeholder="Enter 4 Digit Pin number"
+              class="input input-bordered"
+              autocomplete="on"
+              id="input-pin"
+            />
+          </div>
+          <p id="error-msg-pin" class="text-red-600 text-sm hidden">
+            Invalid PIN
+          </p>
+
+          <div class="form-control mt-6">
+            <!-- BUTTON -->
+            <button
+              class="btn bg-[#0874F2] rounded-full text-white text-lg font-semibold"
+              id="add-btn"
+            >
+              Add Money
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <!-- Added Withdraw section -->
+      <section id="cash-out" class="hidden">
+        <form class="card-body container w-3/5 mx-auto">
+          <div class="form-control">
+            <label class="label">
+              <span class="font-medium text-black">Agent Number</span>
+            </label>
+            <input
+              type="text"
+              placeholder="Enter 11 digit number"
+              class="input input-bordered"
+              autocomplete="on"
+              id="input-agent-number"
+            />
+          </div>
+          <p id="error-msg-agent" class="text-red-600 text-sm hidden">
+            Invalid Agent Number
+          </p>
+
+          <div class="form-control">
+            <label class="label">
+              <span class="font-medium text-black">Amount</span>
+            </label>
+            <input
+              type="text"
+              placeholder="Add Amount to withdraw"
+              class="input input-bordered"
+              autocomplete="on"
+              id="input-withdraw-amount"
+            />
+          </div>
+          <p id="error-msg-cashout-amount" class="text-red-600 text-sm hidden">
+            Invalid Amount
+          </p>
+
+          <div class="form-control">
+            <label class="label">
+              <span class="font-medium text-black">Pin Number</span>
+            </label>
+            <input
+              type="password"
+              placeholder="Enter 4 Digit Pin number"
+              class="input input-bordered"
+              autocomplete="on"
+              id="input-pin-number"
+            />
+          </div>
+          <p id="error-msg-pin-number" class="text-red-600 text-sm hidden">
+            Invalid PIN
+          </p>
+
+          <div class="form-control mt-6">
+            <!-- BUTTON -->
+            <button
+              class="btn bg-[#0874F2] rounded-full text-white text-lg font-semibold"
+              id="withdraw-btn"
+            >
+              Withdraw Money
+            </button>
+          </div>
+        </form>
+      </section>
     </main>
+    <script src="javascripts/options.js"></script>
+    <script src="javascripts/addmoney.js"></script>
+    <script type="module" src="javascripts/cashout.js"></script>
   </body>
 </html>
